@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DamClock</title>
+
+    <script>
+      (function(d) {
+        var config = {
+          kitId: 'wca7lgg',
+          scriptTimeout: 3000,
+          async: true
+        },
+        h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+      })(document);
+    </script>
+
+    <link rel="stylesheet" href="src/styles/style.css">
+    <script src="src/scripts/main.js" defer></script>
+</head>
+<body>
+    <main class="clock">
+
+        <section class="dam" aria-label="지금 담이">
+
+            <button class="bubble" type="button" aria-label="담이 말 보기">
+                <span class="bubble-front"></span>
+                <span class="bubble-back"></span>
+            </button>
+
+            <div class="photo-frame">
+                <img class="dam-photo" alt="담이">
+                <img class="dam-photo" alt="">
+            </div>
+        </section>
+
+        <nav class="paw-bar" aria-label="시간 발자국">
+            <ol class="paw-list"></ol>
+        </nav>
+    </main>
+</body>
+</html>

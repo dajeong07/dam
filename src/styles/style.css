@@ -1,0 +1,238 @@
+
+:root {
+
+  --color-white: #FFFFFF;
+  --color-ink: #1A1A1A;
+
+
+  --paw-night: #1B2A4A;   
+  --paw-dawn: #6B5B95;   
+  --paw-day: #FF9F43;    
+  --paw-sunset: #E8604C; 
+
+  /* 크기 */
+  --size-photo-width: 30vw; 
+  --size-photo-height: 26vw;
+  --size-bubble-width: 24vw; 
+  --size-bubble-height: 15vw;
+  --size-paw: 2.6vw;      
+  --line-width: 0.2vw;      
+
+  /* 글자 */
+  --font-family: "agahnsangsoo2012", sans-serif; 
+  --font-weight: 500;
+  --font-emoji: 3.5vw;  
+  --font-body: 1.3vw;  
+
+  /* 간격 */
+  --space-xs: 0.5vw;
+  --space-s: 1vw;
+  --space-m: 2vw;
+  --space-l: 3vw;
+  --space-xl: 5vw;
+
+  /* 시간 */
+  --duration-fade: 5s;      
+  --duration-fast: 0.15s;   
+  --duration-pulse: 1.2s;  
+  --duration-flip: 0.6s;     
+  --duration-bounce: 0.6s; 
+  --duration-shake-out: 2s;  
+}
+
+
+/* =========================================================
+   2. 기본 설정
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight);
+  font-style: normal;
+  color: var(--color-ink);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+}
+
+
+/* =========================================================
+   3. 화면
+   ========================================================= */
+
+.clock {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-xl) var(--space-l) var(--space-l);
+}
+
+.dam {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-m);
+  perspective: 100vw;
+}
+
+
+/* --- 말풍선 --- */
+
+.bubble {
+  position: relative;
+  width: var(--size-bubble-width);
+  height: var(--size-bubble-height);
+  background: url("../assets/cloud.svg") center / 100% 100% no-repeat;
+  transform-style: preserve-3d; 
+  transition: transform var(--duration-flip) ease-in-out;
+}
+
+
+.bubble.flipped {
+  transform: rotateY(180deg);
+}
+
+.bubble.no-flip-motion {
+  transition: none;
+}
+
+.bubble.bounce-in {
+  animation: bounce-in var(--duration-bounce) ease-out;
+}
+
+@keyframes bounce-in {
+  0%   { transform: scale(0.3); }
+  55%  { transform: scale(1.15); }
+  75%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.bubble.shake-out {
+  animation: shake-out var(--duration-shake-out) ease-in forwards;
+}
+
+@keyframes shake-out {
+  0%, 50% { transform: translateX(0) scale(1); }
+  10%     { transform: translateX(-1.5%) rotate(-2deg); }
+  20%     { transform: translateX(1.5%) rotate(2deg); }
+  30%     { transform: translateX(-1.5%) rotate(-2deg); }
+  40%     { transform: translateX(1.5%) rotate(2deg); }
+  100%    { transform: scale(0); }
+}
+
+.bubble-front,
+.bubble-back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-s) var(--space-l) var(--space-l);
+  backface-visibility: hidden; 
+}
+
+.bubble-front {
+  font-size: var(--font-emoji);
+}
+
+.bubble-back {
+  font-size: var(--font-body);
+  line-height: 1.5;
+  word-break: keep-all; 
+  transform: rotateY(180deg);
+}
+
+
+/* --- 담이 사진 --- */
+
+.photo-frame {
+  position: relative;
+  width: var(--size-photo-width);
+  height: var(--size-photo-height);
+}
+
+.dam-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity var(--photo-duration) ease,
+    transform var(--photo-duration) ease;
+}
+
+.dam-photo.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+/* --- 발자국 바 --- */
+
+.paw-list {
+  display: flex;
+  list-style: none;   
+  touch-action: none;
+  user-select: none;  
+}
+
+.paw {
+  display: block;
+  padding: var(--space-xs);
+  border-radius: var(--space-s);
+}
+
+.paw-shape {
+  display: block;
+  width: var(--size-paw);
+  height: var(--size-paw);
+  background-color: var(--paw-color);
+  -webkit-mask: url("../assets/paw.svg") center / contain no-repeat;
+  mask: url("../assets/paw.svg") center / contain no-repeat;
+}
+
+.paw.now {
+  animation: pulse var(--duration-pulse) ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.15); }
+}
+
+.paw.pop {
+  animation: pop var(--duration-fast) ease-out;
+}
+
+@keyframes pop {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.3); }
+}
+
+.paw.selected {
+  outline: var(--line-width) solid var(--color-ink);
+}
